@@ -92,12 +92,6 @@ npm test
 
 The OpenCode V2 migration guide currently lists provider `whitelist` and `blacklist` as accepted-but-unsupported legacy fields. The related feature request for a native V2 replacement is [anomalyco/opencode#49986](https://github.com/anomalyco/opencode/issues/49986).
 
-## Licencia / License
+## License
 
 MIT. See [LICENSE](LICENSE).
-
----
-
-# Filtros de modelos para OpenCode V2
-
-Filtro dinámico por proveedor para recuperar el comportamiento práctico de `whitelist` y `blacklist` de V1 sin modificar el binario de OpenCode. Las listas siguen viviendo en tu `opencode.json`; el plugin solo las aplica al catálogo actual descubierto por OpenCode.
