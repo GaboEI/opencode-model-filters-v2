@@ -45,7 +45,7 @@ if [ ! -f "$CONFIG_PATH" ]; then
   exit 0
 fi
 
-CONFIG_PATH="$CONFIG_PATH" INSTALL_DIR="$INSTALL_DIR" node --input-type=module <<'NODE'
+CONFIG_PATH="$CONFIG_PATH" INSTALL_DIR="$INSTALL_DIR" IS_NEW_VERSION="$IS_NEW_VERSION" node --input-type=module <<'NODE'
 import fs from "node:fs";
 
 const configPath = process.env.CONFIG_PATH;
