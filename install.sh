@@ -2,9 +2,6 @@
 set -euo pipefail
 
 REPO_URL="${OPENCODE_MODEL_FILTERS_REPO:-https://github.com/GaboEI/opencode-model-filters-v2.git}"
-CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
-CONFIG_PATH="${OPENCODE_CONFIG:-$CONFIG_HOME/opencode/opencode.json}"
-INSTALL_DIR="${OPENCODE_MODEL_FILTERS_DIR:-$CONFIG_HOME/opencode/plugins/opencode-model-filters-v2}"
 
 command -v git >/dev/null 2>&1 || {
   printf '%s\n' 'Error: git is required to install this plugin.' >&2
@@ -21,9 +18,20 @@ printf 'opencode version: %s\n' "$version"
 
 if [[ "$version" == v2* ]]; then
     IS_NEW_VERSION=true
+    CONFIG_HOME="~/.config"
+
     else
     IS_NEW_VERSION=false
+    CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+
 fi
+
+CONFIG_PATH="${OPENCODE_CONFIG:-$CONFIG_HOME/opencode/opencode.json}"
+INSTALL_DIR="${OPENCODE_MODEL_FILTERS_DIR:-$CONFIG_HOME/opencode/plugins/opencode-model-filters-v2}"
+
+printf 'CONFIG_HOME %s\n' "$CONFIG_HOME"
+printf 'CONFIG_PATH %s\n' "$CONFIG_PATH"
+printf 'INSTALL_DIR %s\n' "$INSTALL_DIR"
 
 tmp_dir="$(mktemp -d)"
 backup_path=""
