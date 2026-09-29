@@ -5,6 +5,7 @@ REPO_URL="${OPENCODE_MODEL_FILTERS_REPO:-https://github.com/GaboEI/opencode-mode
 CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 CONFIG_PATH="${OPENCODE_CONFIG:-$CONFIG_HOME/opencode/opencode.json}"
 INSTALL_DIR="${OPENCODE_MODEL_FILTERS_DIR:-$CONFIG_HOME/opencode/plugins/opencode-model-filters-v2}"
+IS_NEW_VERSION=false
 
 command -v git >/dev/null 2>&1 || {
   printf '%s\n' 'Error: git is required to install this plugin.' >&2
@@ -14,6 +15,14 @@ command -v node >/dev/null 2>&1 || {
   printf '%s\n' 'Error: Node.js is required to update opencode.json.' >&2
   exit 1
 }
+
+version="$(opencode -v)"
+
+if [[ "$version" == v2* ]]; then
+    IS_NEW_VERSION=true
+fi
+
+mv "isNewVersion" "$isNewVersion"
 
 tmp_dir="$(mktemp -d)"
 backup_path=""
@@ -41,7 +50,8 @@ import fs from "node:fs";
 
 const configPath = process.env.CONFIG_PATH;
 const installDir = process.env.INSTALL_DIR;
-const pluginEntry = JSON.stringify(`${installDir}/src/index.js`);
+const isNewVersion = process.env.IS_NEW_VERSION;
+const pluginEntry = isNewVersion ? JSON.stringify(`${installDir}`) : JSON.stringify(`${installDir}/src/index.js`);
 let text = fs.readFileSync(configPath, "utf8");
 
 if (text.includes(pluginEntry)) {
@@ -51,7 +61,7 @@ if (text.includes(pluginEntry)) {
 
 const match = /["']plugin["']\s*:\s*\[/.exec(text);
 if (!match) {
-  throw new Error(`Could not find a plugin array in ${configPath}`);
+  throw new Error(`Could not find a plugin array in ${configPath}. Insert it manualy`);
 }
 
 const open = text.indexOf("[", match.index);
