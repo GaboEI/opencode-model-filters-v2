@@ -15,6 +15,9 @@ $installDir = if ($env:OPENCODE_MODEL_FILTERS_DIR) {
   Join-Path $opencodeDir "plugins/opencode-model-filters-v2"
 }
 
+$version = opencode -v
+$isNewVersion = $version -like "v2*"
+
 $tempRoot = Join-Path ([IO.Path]::GetTempPath()) ("opencode-model-filters-" + [guid]::NewGuid().ToString("N"))
 $zipPath = Join-Path $tempRoot "plugin.zip"
 $extractRoot = Join-Path $tempRoot "extract"
@@ -39,7 +42,8 @@ try {
 import fs from "node:fs";
 const configPath = process.argv[2];
 const installDir = process.argv[3];
-const entry = JSON.stringify(`${installDir.replaceAll("\\", "/")}/src/index.js`);
+const isNewVersion = process.argv[4];
+const entry = isNewVersion ? JSON.stringify(`${installDir.replaceAll("\\", "/")}`) : JSON.stringify(`${installDir.replaceAll("\\", "/")}/src/index.js`);
 let text = fs.readFileSync(configPath, "utf8");
 if (!text.includes(entry)) {
   const match = /["']plugin["']\s*:\s*\[/.exec(text);
@@ -66,7 +70,7 @@ if (!text.includes(entry)) {
   console.log(`Added plugin entry to ${configPath}`);
 } else console.log(`Plugin already configured: ${entry}`);
 '@
-    $nodeScript | & node --input-type=module - $configPath $installDir
+    $nodeScript | & node --input-type=module - $configPath $installDir $isNewVersion
     if ($LASTEXITCODE -ne 0) { throw "Could not update the OpenCode configuration." }
   } else {
     Write-Host "Configuration file not found: $configPath"
