@@ -1,0 +1,13 @@
+{
+  "name": "opencode-model-filters-v2",
+  "version": "1.0.0",
+  "description": "Dynamic per-provider model filtering for OpenCode v2",
+  "type": "module",
+  "license": "MIT",
+  "main": "src/index.js",
+  "files": ["src", "README.md", "LICENSE"],
+  "scripts": {
+    "test": "node --test"
+  },
+  "keywords": ["opencode", "opencode-plugin", "model-filter", "whitelist", "blacklist"]
+}
