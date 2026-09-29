@@ -12,6 +12,18 @@ The plugin applies the filters through OpenCode V2's model transform API, after 
 
 ## Installation
 
+### One-command installer
+
+On Linux and macOS, run this command in a terminal:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/GaboEI/opencode-model-filters-v2/main/install.sh | bash
+```
+
+The installer clones the latest version into `~/.config/opencode/plugins/opencode-model-filters-v2`, adds the plugin to the normal OpenCode configuration, and creates timestamped backups before changing existing files. It does not modify the OpenCode executable. Restart OpenCode after it completes.
+
+To inspect the installer before running it, download it first and read `install.sh` from this repository.
+
 Add the repository path or an installed package to the `plugin` array in `~/.config/opencode/opencode.json`:
 
 ```json
