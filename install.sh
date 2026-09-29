@@ -22,8 +22,6 @@ if [[ "$version" == v2* ]]; then
     IS_NEW_VERSION=true
 fi
 
-mv "isNewVersion" "$isNewVersion"
-
 tmp_dir="$(mktemp -d)"
 backup_path=""
 cleanup() { rm -rf "$tmp_dir"; }
