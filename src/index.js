@@ -21,7 +21,7 @@ export function parseJsonc(text) {
 export async function loadProviderRules(path = configPath()) {
   try {
     const config = parseJsonc(await readFile(path, "utf8"))
-    return config && typeof config.provider === "object" ? config.provider : {}
+    return config && typeof config.provider === "object" ? config.provider : typeof config.providers === "object" ? config.providers: {}
   } catch {
     return {}
   }
