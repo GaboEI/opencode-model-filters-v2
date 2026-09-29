@@ -16,6 +16,8 @@ $installDir = if ($env:OPENCODE_MODEL_FILTERS_DIR) {
 }
 
 $version = opencode -v
+$version = [regex]::Match($version, 'v[0-9][0-9.]*').Value
+
 $isNewVersion = $version -like "v2*"
 
 $tempRoot = Join-Path ([IO.Path]::GetTempPath()) ("opencode-model-filters-" + [guid]::NewGuid().ToString("N"))
