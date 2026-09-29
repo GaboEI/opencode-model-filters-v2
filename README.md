@@ -24,6 +24,16 @@ The installer clones the latest version into `~/.config/opencode/plugins/opencod
 
 To inspect the installer before running it, download it first and read `install.sh` from this repository.
 
+### Windows PowerShell
+
+In PowerShell, run:
+
+```powershell
+irm https://raw.githubusercontent.com/GaboEI/opencode-model-filters-v2/main/install.ps1 | iex
+```
+
+The PowerShell installer performs the same backup, installation, and configuration steps. It uses the standard OpenCode configuration location under your user profile, or the path provided by `OPENCODE_CONFIG`.
+
 Add the repository path or an installed package to the `plugin` array in `~/.config/opencode/opencode.json`:
 
 ```json
