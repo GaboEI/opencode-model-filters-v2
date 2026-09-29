@@ -1,5 +1,7 @@
 # OpenCode Model Filters V2
 
+[![CI](https://github.com/GaboEI/opencode-model-filters-v2/actions/workflows/ci.yml/badge.svg)](https://github.com/GaboEI/opencode-model-filters-v2/actions/workflows/ci.yml)
+
 Dynamic per-provider model filtering for OpenCode V2.
 
 This plugin restores the practical V1 behavior of `whitelist` and `blacklist` without modifying or replacing the OpenCode executable.
