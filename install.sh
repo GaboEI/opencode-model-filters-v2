@@ -5,7 +5,6 @@ REPO_URL="${OPENCODE_MODEL_FILTERS_REPO:-https://github.com/GaboEI/opencode-mode
 CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 CONFIG_PATH="${OPENCODE_CONFIG:-$CONFIG_HOME/opencode/opencode.json}"
 INSTALL_DIR="${OPENCODE_MODEL_FILTERS_DIR:-$CONFIG_HOME/opencode/plugins/opencode-model-filters-v2}"
-IS_NEW_VERSION=false
 
 command -v git >/dev/null 2>&1 || {
   printf '%s\n' 'Error: git is required to install this plugin.' >&2
@@ -16,10 +15,14 @@ command -v node >/dev/null 2>&1 || {
   exit 1
 }
 
-version="$(opencode -v)"
+version="$(opencode -v | sed -n 's/.*\(v[0-9][0-9.]*\).*/\1/p')"
+
+printf 'opencode version: %s\n' "$version"
 
 if [[ "$version" == v2* ]]; then
     IS_NEW_VERSION=true
+    else
+    IS_NEW_VERSION=false
 fi
 
 tmp_dir="$(mktemp -d)"
@@ -49,6 +52,9 @@ import fs from "node:fs";
 const configPath = process.env.CONFIG_PATH;
 const installDir = process.env.INSTALL_DIR;
 const isNewVersion = process.env.IS_NEW_VERSION;
+
+console.log("isNewVersion", isNewVersion)
+
 const pluginEntry = isNewVersion ? JSON.stringify(`${installDir}`) : JSON.stringify(`${installDir}/src/index.js`);
 let text = fs.readFileSync(configPath, "utf8");
 
